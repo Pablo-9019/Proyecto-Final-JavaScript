@@ -1,37 +1,42 @@
 [
   {
     "id": 1,
-    "nombre": "Pan",
-    "marca": "Casa Aconcagua",
+    "nombre": "pan",
+    "categoria": "Panes",
     "precio": 500,
-    "stock": 30
+    "stock": 30,
+    "imagen": "assets/img/pan.jpg"
   },
   {
     "id": 2,
-    "nombre": "Galletas",
-    "marca": "Dulce Cuyo",
+    "nombre": "galletas",
+    "categoria": "Dulce Cuyo",
     "precio": 1000,
-    "stock": 100
+    "stock": 100,
+    "imagen": "assets/img/galletas.jpg"
   },
   {
     "id": 3,
-    "nombre": "Facturas",
-    "marca": "Horno Andino",
+    "nombre": "facturas",
+    "categoria": "Horno Andino",
     "precio": 850,
-    "stock": 50
+    "stock": 50,
+    "imagen": "assets/img/facturas.jpg"
   },
   {
     "id": 4,
-    "nombre": "Tortas",
-    "marca": "Dulce Cuyo",
+    "nombre": "tortas",
+    "categoria": "Dulce Cuyo",
     "precio": 350,
-    "stock": 100
+    "stock": 100,
+    "imagen": "assets/img/tortas.jpg"
   },
   {
     "id": 5,
-    "nombre": "Sandwiches",
-    "marca": "Casa Aconcagua",
+    "nombre": "sandwiches",
+    "categoria": "Casa Aconcagua",
     "precio": 1500,
-    "stock": 150
+    "stock": 150,
+    "imagen": "assets/img/sandwiches.jpg"
   }
 ]

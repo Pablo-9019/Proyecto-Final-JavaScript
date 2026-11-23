@@ -47,7 +47,7 @@ async function cargarProductos() {
 
 function renderizarProductos() {
     listaProductos.innerHTML = ""
-    productos.forEach(({ id, nombre, marca, precio, stock }) => {
+    productos.forEach(({ id, nombre, categoria, precio, stock, imagen }) => {
         const precioOriginal = precio.toLocaleString("es-AR")
         const precioFinal = precioConDescuento(precio).toLocaleString("es-AR")
 
@@ -55,7 +55,7 @@ function renderizarProductos() {
         tarjeta.className = "box"
         tarjeta.innerHTML = `
         <h3>${nombre}</h3>
-        <p class="marca">Marca: ${marca}</p>
+        <p class="categoria">Categoría: ${categoria}</p>
         <p class="precio">
             <span class="precio-original">$${precioOriginal}</span>
             <span class="precio-descuento">$${precioFinal}</span>
