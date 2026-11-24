@@ -80,9 +80,29 @@ input[type="search"] {
 .box p {
     margin: 0;
 }
-.marca {
-    color: var(--gris);
+.categoria {
+     color: var(--gris);
+    font-size: 0.9rem;
 }
+
+.foto-producto {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+.encabezado-marca {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 .precio {
     display: flex;
     flex-wrap: wrap;
