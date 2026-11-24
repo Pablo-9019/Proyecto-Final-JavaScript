@@ -9,15 +9,20 @@
     <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script defer src="js/main.js"></script>
+    <link rel="icon" href="assets/img/logo.png"> 
 </head>
 <body>
     <header class="encabezado">
+    <div class="encabezado-marca">
+        <img src="assets/img/logo.png" alt="Logo de Pan del Aconcagua" class="logo">
         <div class="encabezado-titulo">
             <h1>Pan del Aconcagua</h1>
-            <p>Panaderia artesanal</p>
+            <p>Panadería artesanal</p>
         </div>
-        <button type="button" id="ver-carrito" class="btn-carrito">Ver carrito</button>
-    </header>
+    </div>
+    <button type="button" id="ver-carrito" class="btn-carrito">Ver carrito (<span id="contador">0</span>)</button>
+</header>
+
  
     <main class="contenido">
         <div class="barra-busqueda">
