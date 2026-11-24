@@ -134,6 +134,12 @@ function eliminarDelCarrito(id) {
     guardarCarrito()
     notificar("Producto eliminado del carrito", "#b03a2e")
 }
+function vaciarCarrito() {
+    carrito = []
+    localStorage.removeItem("carrito")
+    actualizarCarrito()
+}
+
 
 function actualizarCarrito() {
     listaCarrito.innerHTML = ""
@@ -187,6 +193,7 @@ document.getElementById("vaciar").addEventListener("click", () => {
         notificar("El carrito ya esta vacio", "#b03a2e")
         return
     }
+
     Swal.fire({
         icon: "warning",
         title: "¿Vaciar el carrito?",
@@ -214,8 +221,7 @@ document.getElementById("compra").addEventListener("click", () => {
         })
         return
     }
-    carrito = []
-    guardarCarrito()
+    vaciarCarrito()
     panelCarrito.classList.remove("active")
     Swal.fire({
         icon: "success",
