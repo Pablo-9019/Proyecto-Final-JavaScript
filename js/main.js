@@ -33,12 +33,12 @@ async function cargarProductos() {
         productos = await respuesta.json()
         renderizarProductos()
         actualizarCarrito()
-        notificar("Productos cargados con exito", "#2f5d50")
+        notificar("Productos cargados con éxito", "#2f5d50")
     } catch (error) {
         Swal.fire({
             icon: "error",
             title: "No se pudieron cargar los productos",
-            text: "Revisa tu conexion o intenta de nuevo mas tarde.",
+            text: "Revisa tu conexion o intenta de nuevo más tarde.",
             confirmButtonColor: "#2f5d50"
         })
     } finally {
@@ -98,11 +98,11 @@ function agregarAlCarrito(id) {
     } else if (productoEnCarrito.cantidad < producto.stock) {
         productoEnCarrito.cantidad++
     } else {
-        notificar("No hay mas stock de este producto", "#b03a2e")
+        notificar("No hay más stock de este producto", "#b03a2e")
         return
     }
     guardarCarrito()
-    notificar("Producto agregado al carrito", "#2f5d50")
+    notificar(`${producto.nombre} agregado al carrito `, "#2f5d50")
 }
 
 function cambiarCantidad(id, cambio) {
@@ -115,7 +115,7 @@ function cambiarCantidad(id, cambio) {
         return
     }
     if (nuevaCantidad > producto.stock) {
-        notificar("No hay mas stock de este producto", "#b03a2e")
+        notificar("No hay más stock de este producto", "#b03a2e")
         return
     }
     productoEnCarrito.cantidad = nuevaCantidad
@@ -190,7 +190,7 @@ function filtrarProductos() {
 
 document.getElementById("vaciar").addEventListener("click", () => {
     if (carrito.length === 0) {
-        notificar("El carrito ya esta vacio", "#b03a2e")
+        notificar("El carrito ya está vacío", "#b03a2e")
         return
     }
 
@@ -199,7 +199,7 @@ document.getElementById("vaciar").addEventListener("click", () => {
         title: "¿Vaciar el carrito?",
         text: "Se van a quitar todos los productos.",
         showCancelButton: true,
-        confirmButtonText: "Si, vaciar",
+        confirmButtonText: "Sí, vaciar",
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#2f5d50"
     }).then((resultado) => {
@@ -215,8 +215,8 @@ document.getElementById("compra").addEventListener("click", () => {
     if (carrito.length === 0) {
         Swal.fire({
             icon: "error",
-            title: "El carrito esta vacio",
-            text: "Agrega algun producto antes de comprar.",
+            title: "El carrito está vacío",
+            text: "Agregá algún producto antes de comprar.",
             confirmButtonColor: "#2f5d50"
         })
         return
