@@ -10,7 +10,7 @@
   {
     "id": 2,
     "nombre": "galletas",
-    "categoria": "Dulce Cuyo",
+    "categoria": "Surtidas",
     "precio": 1000,
     "stock": 100,
     "imagen": "assets/img/galletas.jpg"
@@ -18,23 +18,23 @@
   {
     "id": 3,
     "nombre": "facturas",
-    "categoria": "Horno Andino",
+    "categoria": "Dulces",
     "precio": 850,
     "stock": 50,
     "imagen": "assets/img/facturas.jpg"
   },
   {
     "id": 4,
-    "nombre": "tortas",
-    "categoria": "Dulce Cuyo",
+    "nombre": "torta",
+    "categoria": "Pasteleria",
     "precio": 350,
     "stock": 100,
-    "imagen": "assets/img/tortas.jpg"
+    "imagen": "assets/img/torta.jpg"
   },
   {
     "id": 5,
     "nombre": "sandwiches",
-    "categoria": "Casa Aconcagua",
+    "categoria": "Salados",
     "precio": 1500,
     "stock": 150,
     "imagen": "assets/img/sandwiches.jpg"

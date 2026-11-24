@@ -50,10 +50,12 @@ function renderizarProductos() {
     productos.forEach(({ id, nombre, categoria, precio, stock, imagen }) => {
         const precioOriginal = precio.toLocaleString("es-AR")
         const precioFinal = precioConDescuento(precio).toLocaleString("es-AR")
+        const textoBoton = stock === 0 ? "Sin stock" : "+ Agregar al carrito"
 
         const tarjeta = document.createElement("article")
         tarjeta.className = "box"
         tarjeta.innerHTML = `
+        <img src="${imagen}" alt="${nombre}" class="foto-producto">
         <h3>${nombre}</h3>
         <p class="categoria">Categoría: ${categoria}</p>
         <p class="precio">
@@ -62,10 +64,10 @@ function renderizarProductos() {
             <span class="etiqueta-descuento">20% OFF</span>
         </p>
         <p>Disponible: ${stock}</p>
-        <button type="button" class="btn" id="${id}">+ Agregar al carrito</button>`
+        <button type="button" class="btn" id="agregar-${id}">${textoBoton}</button>`
         listaProductos.appendChild(tarjeta)
 
-        const boton = document.getElementById(id)
+        const boton = document.getElementById(`agregar-${id}`)
         boton.disabled = stock === 0
         boton.addEventListener("click", () => {
             agregarAlCarrito(id)
@@ -133,12 +135,13 @@ function actualizarCarrito() {
         if (producto === undefined) {
             return
         }
-        const { nombre, precio } = producto
+        const { nombre, precio, imagen } = producto
         const precioOriginal = precio.toLocaleString("es-AR")
         const precioFinal = precioConDescuento(precio).toLocaleString("es-AR")
 
         const elemento = document.createElement("li")
         elemento.innerHTML = `
+        <img src="${imagen}" alt="${nombre}" class="foto-producto">
         <span>${nombre} - <del>$${precioOriginal}</del> $${precioFinal}</span>
         <div class="controles-cantidad">
             <button type="button" class="btn-restar">-</button>
