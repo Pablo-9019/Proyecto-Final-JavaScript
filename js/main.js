@@ -9,6 +9,15 @@ const panelCarrito = document.querySelector(".carrito")
 const busqueda = document.getElementById("busqueda")
 const totalCarrito = document.getElementById("total")
 const contadorCarrito = document.getElementById("contador")
+const costoEnvio = 1500
+const seccionCheckout = document.getElementById("checkout")
+const listaResumen = document.getElementById("resumen")
+const envioDetalle = document.getElementById("envio-detalle")
+const totalCheckout = document.getElementById("total-checkout")
+const formCompra = document.getElementById("form-compra")
+const campoDireccion = document.getElementById("campo-direccion")
+const errorForm = document.getElementById("error-form")
+
 
 let productos = []
 let carrito = JSON.parse(localStorage.getItem("carrito")) ?? []
@@ -188,6 +197,99 @@ function filtrarProductos() {
     })
 }
 
+function obtenerEntrega() {
+    return formCompra.querySelector("input[name='entrega']:checked").value
+}
+ 
+function obtenerPago() {
+    return formCompra.querySelector("input[name='pago']:checked").value
+}
+ 
+function calcularTotalConEnvio() {
+    const envio = obtenerEntrega() === "envio" ? costoEnvio : 0
+    return calcularTotal() + envio
+}
+ 
+function mostrarResumen() {
+    listaResumen.innerHTML = ""
+    carrito.forEach(({ id, cantidad }) => {
+        const { nombre, precio } = buscarProducto(id)
+        const subtotal = (precioConDescuento(precio) * cantidad).toLocaleString("es-AR")
+        const elemento = document.createElement("li")
+        elemento.textContent = `${cantidad} x ${nombre} - $${subtotal}`
+        listaResumen.appendChild(elemento)
+    })
+    const esEnvio = obtenerEntrega() === "envio"
+    envioDetalle.textContent = esEnvio ? `Envío: $${costoEnvio}` : "Retiro en el local: sin costo"
+    campoDireccion.classList.toggle("oculto", !esEnvio)
+    totalCheckout.textContent = `Total a pagar: $${calcularTotalConEnvio().toLocaleString("es-AR")}`
+}
+ 
+function abrirCheckout() {
+    errorForm.textContent = ""
+    mostrarResumen()
+    panelCarrito.classList.remove("active")
+    seccionCheckout.classList.remove("oculto")
+}
+ 
+function cerrarCheckout() {
+    seccionCheckout.classList.add("oculto")
+}
+ 
+function validarFormulario(nombre, telefono, direccion) {
+    if (nombre === "") {
+        return "Ingresá tu nombre y apellido."
+    }
+    if (telefono.length < 8 || isNaN(telefono)) {
+        return "Ingresá un teléfono válido (solo números)."
+    }
+    if (obtenerEntrega() === "envio" && direccion === "") {
+        return "Ingresá la dirección para el envío."
+    }
+    return ""
+}
+ 
+function confirmarPedido(evento) {
+    evento.preventDefault()
+    const nombre = document.getElementById("nombre").value.trim()
+    const telefono = document.getElementById("telefono").value.trim()
+    const direccion = document.getElementById("direccion").value.trim()
+    const notas = document.getElementById("notas").value.trim() || "Sin aclaraciones"
+ 
+    const error = validarFormulario(nombre, telefono, direccion)
+    errorForm.textContent = error
+    if (error !== "") {
+        return
+    }
+ 
+    const total = calcularTotalConEnvio().toLocaleString("es-AR")
+    const pago = obtenerPago()
+    const textoEntrega = obtenerEntrega() === "envio" ? `Lo enviamos a ${direccion}.` : "Lo retirás en el local."
+ 
+    Swal.fire({
+        icon: "question",
+        title: "¿Confirmás tu pedido?",
+        text: `Total: $${total} - Pago: ${pago}`,
+        showCancelButton: true,
+        confirmButtonText: "Sí, confirmar",
+        cancelButtonText: "Revisar",
+        confirmButtonColor: "#2f5d50"
+    }).then((resultado) => {
+        if (resultado.isConfirmed) {
+            const numeroPedido = Math.floor(Math.random() * 9000) + 1000
+            vaciarCarrito()
+            formCompra.reset()
+            cerrarCheckout()
+            Swal.fire({
+                icon: "success",
+                title: `¡Gracias, ${nombre}!`,
+                html: `Pedido N° ${numeroPedido}<br>Total: $${total} (${pago})<br>${textoEntrega}<br>Aclaraciones: ${notas}`,
+                confirmButtonColor: "#2f5d50"
+            })
+        }
+    })
+}
+
 document.getElementById("vaciar").addEventListener("click", () => {
     if (carrito.length === 0) {
         notificar("El carrito ya está vacío", "#b03a2e")
@@ -205,7 +307,6 @@ document.getElementById("vaciar").addEventListener("click", () => {
     }).then((resultado) => {
         if (resultado.isConfirmed) {
             carrito = []
-            guardarCarrito()
             notificar("Carrito vaciado", "#2f5d50")
         }
     })
@@ -221,22 +322,24 @@ document.getElementById("compra").addEventListener("click", () => {
         })
         return
     }
-    vaciarCarrito()
-    panelCarrito.classList.remove("active")
-    Swal.fire({
-        icon: "success",
-        title: "Compra exitosa",
-        text: "Gracias por tu compra",
-        confirmButtonColor: "#2f5d50"
+   
     })
-})
 
 document.getElementById("ver-carrito").addEventListener("click", () => {
     panelCarrito.classList.add("active")
 })
 document.querySelector(".cerrar").addEventListener("click", () => {
-    panelCarrito.classList.remove("active")
+  abrirCheckout()
 })
 busqueda.addEventListener("input", filtrarProductos)
 
 cargarProductos()
+
+document.getElementById("volver").addEventListener("click", () => {
+    cerrarCheckout()
+    panelCarrito.classList.add("active")
+})
+formCompra.querySelectorAll("input[name='entrega']").forEach((opcion) => {
+    opcion.addEventListener("change", mostrarResumen)
+})
+formCompra.addEventListener("submit", confirmarPedido)

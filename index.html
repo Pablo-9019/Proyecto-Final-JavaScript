@@ -52,5 +52,47 @@
             </div>
         </div>
     </aside>
+    <section id="checkout" class="checkout oculto">
+    <div class="checkout-caja">
+        <h2>Finalizar compra</h2>
+        <h3>Resumen del pedido</h3>
+        <ul id="resumen" class="resumen"></ul>
+        <p id="envio-detalle"></p>
+        <p id="total-checkout" class="total"></p>
+ 
+        <form id="form-compra" class="form-compra">
+            <label for="nombre">Nombre y apellido</label>
+            <input type="text" id="nombre">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono">
+ 
+            <fieldset>
+                <legend>Entrega</legend>
+                <label><input type="radio" name="entrega" value="retiro" checked> Retiro en el local</label>
+                <label><input type="radio" name="entrega" value="envio"> Envío a domicilio (+$1.500)</label>
+            </fieldset>
+ 
+            <div id="campo-direccion" class="oculto">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion">
+            </div>
+ 
+            <fieldset>
+                <legend>Forma de pago</legend>
+                <label><input type="radio" name="pago" value="Efectivo" checked> Efectivo</label>
+                <label><input type="radio" name="pago" value="Transferencia"> Transferencia</label>
+                <label><input type="radio" name="pago" value="Tarjeta"> Tarjeta</label>
+            </fieldset>
+ 
+            <label for="notas">Aclaraciones (opcional)</label>
+            <input type="text" id="notas">
+ 
+            <p id="error-form" class="error-form"></p>
+            <button type="button" id="volver">Volver al carrito</button>
+            <button type="submit" id="confirmar">Confirmar pedido</button>
+        </form>
+    </div>
+</section>
+
 </body>
 </html>
