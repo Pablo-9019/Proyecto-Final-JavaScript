@@ -8,6 +8,7 @@ const listaCarrito = document.getElementById("lista")
 const panelCarrito = document.querySelector(".carrito")
 const busqueda = document.getElementById("busqueda")
 const totalCarrito = document.getElementById("total")
+const contadorCarrito = document.getElementById("contador")
 
 let productos = []
 let carrito = JSON.parse(localStorage.getItem("carrito")) ?? []
@@ -121,6 +122,13 @@ function cambiarCantidad(id, cambio) {
     guardarCarrito()
 }
 
+function calcularTotal() {
+    return carrito.reduce((acumulado, { id, cantidad }) => {
+        const producto = buscarProducto(id)
+        return producto === undefined ? acumulado : acumulado + precioConDescuento(producto.precio) * cantidad
+    }, 0)
+}
+
 function eliminarDelCarrito(id) {
     carrito = carrito.filter((item) => item.id !== id)
     guardarCarrito()
@@ -129,7 +137,6 @@ function eliminarDelCarrito(id) {
 
 function actualizarCarrito() {
     listaCarrito.innerHTML = ""
-    let total = 0
     carrito.forEach(({ id, cantidad }) => {
         const producto = buscarProducto(id)
         if (producto === undefined) {
@@ -160,10 +167,10 @@ function actualizarCarrito() {
             eliminarDelCarrito(id)
         })
         listaCarrito.appendChild(elemento)
-        total += precioConDescuento(precio) * cantidad
     })
-    const totalFormateado = total.toLocaleString("es-AR")
-    totalCarrito.textContent = `Total: $${totalFormateado}`
+const totalFormateado = calcularTotal().toLocaleString("es-AR")
+    totalCarrito.textContent = carrito.length === 0 ? "Tu carrito está vacío" : `Total: $${totalFormateado}`
+    contadorCarrito.textContent = carrito.reduce((suma, item) => suma + item.cantidad, 0)
 }
 
 function filtrarProductos() {
